@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+    <script src="./js/control.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <title>WeathcerChart</title>
+</head>
+<body>
+    <!-- <form id="add_city"> -->
+        <input type="text" name = "city" placeholder="input city">
+        <button id="add">Add city</button>
+    <!-- </form> -->
+    <div id = "citys"></div>
+    <canvas id="myCanvas" width="200" height="100"></canvas>
+</body>
+
+<script>
+    let locationList = ['taipei','tokyo','paris'];
+    list(locationList,"citys");
+    
+
+    $('#add').on('click',function(){
+        let value = document.getElementsByName("city")[0].value;
+        locationList.push(value);
+        list(locationList,"citys");     
+    })   
+
+</script>
+
+</html>
