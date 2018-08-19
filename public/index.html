@@ -3,32 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="./index.css">
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="./js/control.js"></script>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <title>WeathcerChart</title>
 </head>
 <body>
-    <!-- <form id="add_city"> -->
-        <input type="text" name = "city" placeholder="input city">
-        <button id="add">Add city</button>
-    <!-- </form> -->
+    <div class="section1">
+        <form id = "location">
+            <input type="text" name = "city" placeholder="input city">
+            <button id="add">Add city</button>
+        </form>
+    </div>
+
     <div id = "citys"></div>
-    <canvas id="myCanvas" width="200" height="100"></canvas>
+    <!-- <div class="section2">
+        <canvas id="canvas" width="600px" height="350px"></canvas>
+    </div> -->
+    
 </body>
 
 <script>
-    let locationList = ['taipei','tokyo','paris'];
-    list(locationList,"citys");
+    let data = {
+        'Taipei':35,
+        'Tokyo':20,
+        'Paris':18
+    }
+
+    let data_array = Object.keys(data);
+    let ele = document.getElementById('citys');
+
+    // init show data
+    data_array.map((index)=>{
+        ele.innerHTML += `<div>${index} is ${data[index]} degree</div>`;
+    })
+
+    // add data
+    // $("#add").on('click',function(){
+    //     let value = document.getElementsByName("city")[0].value;
+    //     ele.innerHTML += `<div>is ${value} degree</div>`;
+    //     getLocationTemp(value);
+    // })
+
+    $("#location").submit(function(e){
+        e.preventDefault();
+        $.ajax({
+            url : '/location',
+            type: "POST",
+            dataType: "json",
+            data:$( "#location" ).serialize(),
+            success: function(data) {
+                console.log(data);
+            },
+            error:function(err){
+                console.log(err)
+            }
+        })
+    })
+
+
+    // chart
+    // let chart = document.getElementById('canvas');
+    // let ctx = chart.getContext('2d');
+    // let x = chart.width;
+    // let y = chart.height;
+    // let max_temp = 50;
+    // let min_temp = -30;
+    // let temp_space = 10;
+    // let line_count = (max_temp-min_temp)/temp_space;
+    // let space_height = y/line_count;
+    // console.log(space_height);
+    
+    
+    // // setting up chart axis
+    // ctx.moveTo(0,0);
+    // ctx.lineTo(0,y);
+    // ctx.lineTo(x,y);
+    // ctx.stroke();
+
+    // let y_axis = y;
+    // while(max_temp!=min_temp){
+    //     ctx.moveTo(0,y_axis);
+    //     ctx.lineTo(x,y_axis);
+    //     max_temp-=temp_space;
+    //     y_axis-=space_height;
+    //     ctx.stroke();
+    //     console.log(`max_temp = ${max_temp}`);
+    //     console.log(y_axis);
+    // }
+
+
+    // let dataArray = Object.keys(data);
+    // dataArray.map((index)=>{
+        
+    //     ctx.fillText(`${index}`, 10, 290);
+    // })
+
+
+    // test
+    // let locationList = ['taipei','tokyo','paris'];
+    // list(locationList,"citys");
     
 
-    $('#add').on('click',function(){
-        let value = document.getElementsByName("city")[0].value;
-        locationList.push(value);
-        list(locationList,"citys");     
-    })   
+    // $('#add').on('click',function(){
+    //     let value = document.getElementsByName("city")[0].value;
+    //     locationList.push(value);
+    //     list(locationList,"citys");     
+    // })   
 
 </script>
 

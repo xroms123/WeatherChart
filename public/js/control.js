@@ -6,8 +6,13 @@ let list =(locationList,elementId)=>{
     }
 }
 
-// let addLocation = (location) =>{
-//     locationList.push(location);
+let getLocationTemp = (address) =>{
+    let coordination = location_code.getLocation(address);
+    console.log(coordination);
+}
 
-//     return locationList;
-// }
+let addLocation = (location) =>{
+    locationList.push(location);
+
+    return locationList;
+}
