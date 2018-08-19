@@ -3,8 +3,6 @@ const bodyParser = require('body-parser');
 let urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 const location = require('./modules/index');
-const location_code = require('./modules/location');
-const weather_code = require('./modules/weather');
 
 const port = process.env.PORT || 3000;
 let app = express();
@@ -18,20 +16,14 @@ app.get('/',(req,res)=>{
 
 app.post('/location',urlencodedParser,(req,res)=>{
     let city = req.body.city;
-    let temp = location.getLocationTemp(city)
-               .then((res)=>{
-                   return res
-               },(err)=>{
-                   return err
-               })
-    setTimeout(()=>{
-        console.log(temp)
-    },5000)
-
-    // let l = location.getLocation();
-    // let d = JSON.stringify(l);
-    // console.log(l);
-    // res.send(d);
+    location.getLocationTemp(city)
+        .then((result)=>{
+            let data = JSON.stringify(result);
+            res.send(data);
+        },(err)=>{
+            let data = JSON.stringify(err);
+            res.send(data);
+        })
 })
 
 app.listen(port,()=>{

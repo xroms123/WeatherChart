@@ -19,18 +19,6 @@ let getTempture = (coordination) => {
             }
         })
     })
-
-    // request({
-    //     url : `${forecast_url}/${forecast_key}/${lat},${lng}`,
-    //     json:true
-    // },(error,response,body) => {
-    //     if(!error && response.statusCode === 200){
-    //         let temp = tempConversion(body.currently.temperature);
-    //         callback(undefined,temp);
-    //     }else{
-    //         console.log('Unable to fetch weather');
-    //     }
-    // })
 }
 
 let tempConversion=(temp)=>{

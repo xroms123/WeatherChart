@@ -10,7 +10,7 @@ let getLocationTemp = (address) => {
                 weather_code.getTempture(location)
                     .then((res) => { result(res) },
                           (err) => { reject(err) })
-            },(err) => { eject(err) })
+            },(err) => { reject(err) })
     })
 }
 
