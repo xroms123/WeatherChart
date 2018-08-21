@@ -35,7 +35,7 @@
     }
 
     let chart = document.getElementById('canvas');
-    let ctx = chart.getContext('2d');  
+    let ctx = chart.getContext('2d');
     let x = chart.width;
     let y = chart.height-30;
     let max_temp = 50;
@@ -54,10 +54,10 @@
         ctx.moveTo(30,5);
         ctx.lineTo(30,y);
         ctx.lineTo(x,y);
-
+        
         while(y_axis!==0){
             if(min_temp==0){
-                zero_yaxis = y_axis; 
+                zero_yaxis = y_axis;
             }
             ctx.font = "15px Arial";
             ctx.fillText(min_temp,0,y_axis);
@@ -69,7 +69,28 @@
         ctx.stroke();
     }
 
+    let randerColor = (temp) =>{
+        let r,g,b;
+        if(temp>=0){
+            r = 255;
+            g = 255-temp*6;
+            b = 255-temp*6;
+        }else{
+            r = 255+temp*6;
+            g = 255+temp*6;
+            b = 255;
+        }
+        
+        return 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
 
+    let chartHeight = (temp) =>{
+        if(temp>0){
+            return -( temp * temp_height );
+        }else{
+            return data[index]*temp_height;
+        }
+    }
 
     let drawChart = () =>{
         initChart();
@@ -78,12 +99,12 @@
         let center_width = chart_width/4;
         let x_begin = 30;
         chart_data.map((index)=>{
-            let height = data[index]>0 ? -(data[index]*temp_height) : data[index]*temp_height;
-            let color = parseInt(data[index], 16)*16;
+            let height = chartHeight(data[index]);
             let text = index +" "+ data[index] + "°C";
+            let y_position = data[index]>0 ? zero_yaxis+height-10 : zero_yaxis-height+10;
 
-            ctx.fillText(text,x_begin+center_width,chart.height-10);
-            ctx.fillStyle=`#${color}`;
+            ctx.fillText(text,x_begin+center_width,y_position);
+            ctx.fillStyle= randerColor(data[index]);
             ctx.fillRect(x_begin,zero_yaxis,chart_width,height);
             x_begin+=chart_width;
         })
