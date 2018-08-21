@@ -11,6 +11,10 @@
     width:100%;
 }
 
-#canvas{
-    /* border:1px solid saddlebrown; */
+.spinner{
+    margin-top:5rem;
+    width:100%;
+    font-size: 8rem;
+    color:lightblue;
+    text-align: center;
 }
