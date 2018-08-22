@@ -10,13 +10,37 @@ let line_count = (max_temp-min_temp)/temp_space;
 let space_height = y/(line_count+1);
 let temp_height = y/(max_temp-min_temp+10);
 
-let data = {
-    'Taipei':35,
-    'Tokyo':20,
-    'Paris':18
+let city_array = ['Taipei','Tokyo','Paris']
+let data={}
+
+let initData = (citys) =>{
+    let i = 0;
+    setInterval(()=>{
+        if(i<citys.length){
+            new Promise((resolve,reject)=>{
+                $.ajax({
+                    url : '/location',
+                    type: "POST",
+                    dataType: "json",
+                    data:{
+                        city : citys[i]
+                    },
+                    success: function(data) {
+                        resolve(data);
+                    },
+                    error: function(error){
+                        reject(error)
+                    }
+                })
+            }).then((res)=>{
+                addData(res,citys[i]);
+                i++;
+            })            
+        }  
+    },5000+i*1000)
 }
 
-
+initData(city_array);
 
 let initChart = () =>{
     let y_axis = y;
@@ -60,7 +84,7 @@ let chartHeight = (temp) =>{
     if(temp>0){
         return -( temp * temp_height );
     }else{
-        return data[index]*temp_height;
+        return temp*temp_height;
     }
 }
 
