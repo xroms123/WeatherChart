@@ -10,13 +10,14 @@ let line_count = (max_temp-min_temp)/temp_space;
 let space_height = y/(line_count+1);
 let temp_height = y/(max_temp-min_temp+10);
 
-let city_array = ['Taipei','Tokyo','Paris']
-let data={}
+
 
 let initData = (citys) =>{
     let i = 0;
     setInterval(()=>{
         if(i<citys.length){
+            $(".spinner").show();
+            $("#canvas").hide();
             new Promise((resolve,reject)=>{
                 $.ajax({
                     url : '/location',
@@ -36,11 +37,12 @@ let initData = (citys) =>{
                 addData(res,citys[i]);
                 i++;
             })            
+        }else{
+            $(".spinner").hide();
+            $("#canvas").show();
         }  
-    },5000+i*1000)
+    },5000+i*1200)
 }
-
-initData(city_array);
 
 let initChart = () =>{
     let y_axis = y;
@@ -65,6 +67,20 @@ let initChart = () =>{
     ctx.stroke();
 }
 
+let chartHeight = (temp) =>{
+    if(temp>0){
+        return -( temp * temp_height );
+    }else{
+        return temp*temp_height;
+    }
+}
+
+let addData = (temp,city) =>{
+    data[city] = temp
+    console.log(data);
+    drawChart();
+}
+
 let randerColor = (temp) =>{
     let r,g,b;
     if(temp>=0){
@@ -75,17 +91,8 @@ let randerColor = (temp) =>{
         r = 255+temp*6;
         g = 255+temp*6;
         b = 255;
-    }
-    
+    }   
     return 'rgb(' + r + ',' + g + ',' + b + ')';
-}
-
-let chartHeight = (temp) =>{
-    if(temp>0){
-        return -( temp * temp_height );
-    }else{
-        return temp*temp_height;
-    }
 }
 
 let drawChart = () =>{

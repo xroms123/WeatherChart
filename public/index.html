@@ -31,10 +31,13 @@
 </body>
 <script src="./js/chart.js"></script>
 <script>
+    let city_array = ['Taipei','Tokyo','Paris'];
+    let data={};
+
+    initChart();
+    initData(city_array);
+
     $(".spinner").hide();
-
-    drawChart();
-
     $("#location").submit(function(e){
         $(".spinner").show();
         $("#canvas").hide();
@@ -55,12 +58,6 @@
             }
         })
     })
-
-    let addData = (temp,city) =>{
-        data[city] = temp
-        console.log(data);
-        drawChart();
-    }
 </script>
 
 </html>
